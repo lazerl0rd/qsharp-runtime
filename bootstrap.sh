@@ -14,6 +14,9 @@ if [ ! "$AGENT_ID" == "" ]; then exit; fi
 
 # Make sure everything is ready and builds locally.
 pushd src/Simulation/Native
+if [[ -z $MAKEFLAGS ]]; then
+	export MAKEFLAGS="-j$(nproc)"
+fi
 cmake --build build
 popd
 
