@@ -1,8 +1,8 @@
-#!/bin/bash -v
+#!/usr/bin/env bash
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-set -x 
+set -x
 set -e
 
 pushd src/Simulation/Native
@@ -17,5 +17,5 @@ pushd src/Simulation/Native
 cmake --build build
 popd
 
-dotnet  build src/Simulation/CsharpGeneration.App
-dotnet  build Simulation.sln
+dotnet build src/Simulation/CsharpGeneration.App --configuration Release
+dotnet build Simulation.sln --configuration Release
