@@ -5,6 +5,7 @@
     <Authors>Microsoft</Authors>
     <Product>Microsoft Quantum Development Kit Preview</Product>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <AssemblyVersion>0.9.1909.3002</AssemblyVersion>
   </PropertyGroup>  
 
   <!-- 
