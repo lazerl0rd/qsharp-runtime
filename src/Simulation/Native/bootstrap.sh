@@ -17,7 +17,11 @@ if [[ -z $BuildFolder ]]; then
 	BuildFolder="build"
 fi
 
-echo "Building in $BuildFolder with configuration $BuildConfiguration with gcc$GCC_VERSION"
+if [[ -n $GCC_VERSION ]]; then
+	echo "Building in $BuildFolder with configuration $BuildConfiguration with gcc$GCC_VERSION"
+else
+	echo "Building in $BuildFolder with configuration $BuildConfiguration with clang"
+fi
 
 if [ ! -d $BuildFolder ]; then
 	mkdir -p $BuildFolder;
@@ -27,6 +31,10 @@ pushd $BuildFolder
 if [[ -f CMakeCache.txt ]]; then
 	rm CMakeCache.txt;
 fi
-cmake -DBUILD_SHARED_LIBS:BOOL="1" -DCMAKE_C_COMPILER=gcc$GCC_VERSION -DCMAKE_CXX_COMPILER=g++$GCC_VERSION -DCMAKE_BUILD_TYPE=$BuildConfiguration ..
+if [[ -n $GCC_VERSION ]]; then
+	cmake -DBUILD_SHARED_LIBS:BOOL="1" -DCMAKE_C_COMPILER=gcc$GCC_VERSION -DCMAKE_CXX_COMPILER=g++$GCC_VERSION -DCMAKE_BUILD_TYPE=$BuildConfiguration ..
+else
+	cmake -DBUILD_SHARED_LIBS:BOOL="1" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -D_CMAKE_TOOLCHAIN_PREFIX=llvm- -DCMAKE_LINKER=ld.lld -DCMAKE_BUILD_TYPE=$BuildConfiguration ..
+fi
 popd
 
